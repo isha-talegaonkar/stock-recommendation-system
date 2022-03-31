@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trade</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="css/reset.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+<style>
+body
+	  {
+	    background-image: url("css/stock.jpg");
+	    background-size:cover;
+	  }
+
+	   .loader {
+	    border: 8px solid #f3f3f3; /*Light grey*/
+	    border-top: 8px solid #3498db; /*Blue*/
+	    border-radius: 50%;
+	    width: 40px;
+	    height: 40px;
+	    animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin
+	{
+	    0% { transform: rotate(0deg); }
+	    100% { transform: rotate(360deg); }
+	}
+	</style>
+	</head>
+
+	<body>
+
+	<div class="container" ng-app="myApp">
+		<div class="row">
+			<div class="col-md-12"></div>
+			<div ui-view></div>
+		</div>
+
+		<script type="text/ng-template" id="loginPage">
+    <h2>Market Cap Based Recommendation System<h2>
+      <h3>Login Page</h3><br>
+
+      <form ng-submit="formSubmit()" class="form">
+        <div class="col-md-4">
+
+          <div class="form-group">
+          Username :<input type="text" class="form-control" ng-model="username" placeholder="enter username" required=""/>
+          </div>
+
+          <div class="form-group">
+           Password :<input type="password" class="form-control" ng-model="password" placeholder="enter password" required=""/>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" >Login</button>
+
+            <span class="text-danger">{{ error }}</span>
+
+		</div>
+        </div>
+      </form>
+	</script>
+
+		<!--  stock picker page -->
+		<script type="text/ng-template" id="stockPage">
+<form class="form" ng-app="myApp" ng-controller="StockController">
+<div>
+	<div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Login Successful ! Welcome to Stock application</a>
+    </div>
+
+	<ul class="nav navbar-nav navbar-right">
+      <li><a ui-sref="login" ng-click="logout()"><h4>Logout</h4></a></li>
+    </ul>
+    </div>
+</div>
+<br>
+
+<div class="col-sm-3">
+	<div class="panel panel-default">
+	<div class="panel-heading"><u><h5><b>Select Market Cap</b></h5></u></div>
+	<div class="panel-body">
+		<select ng-init="selectedCap = caps[0]" ng-model="selectedCap" ng-options="x for x in caps">
+        </select>
+    <input type="submit" ng-click="showStockAsPerCap()" value="Submit Cap"><br>
+    </div>
+    </div>
+</div>
+
+<div class="col-sm-5">
+    <div ng-show="showloading">
+    <br>
+	<center><div class="loader"></div><br>
+	<h4>Loading....</h4><center>
+    </div>
+
+	<div class="panel panel-default" ng-show="showRecommendedStockTable">
+	<div class="panel-heading"><b><u><h4>Top 5 Stock Recommendations<h4></u></b></div>
+	<div class="panel-body">
+	<table class="table">
+	<tr>
+    <th></th>
+	<th><b>Stock Symbol</b></th>
+	<th><b>Stock Price</b></th>
+    <th><b>Quantity</b></th>
+	</tr>
+	<tr ng-repeat="x in recommendedStockList">
+		<td><input type="checkbox" ng-model="x.selected"></td>
+		<td><span ng-bind="x.stocksymbol"></span></td>
+		<td><span ng-bind="x.stockprice"></span></td>
+		<td><input type="number" id="quantityField{{$index}}" name="quantity" value="1"></td>
+	</tr>
+	</table>
+	<p><button ng-click="saveStocks()">Save Stocks</button></p>
+	</div>
+	</div>
+</div>
+
+<div class="col-sm-3">
+	<div id="myCap" class="panel panel-default">
+		<div class="panel-heading"><b><h5><u>Your Saved Stocks</u><h5></b></div>
+		<div class="panel-body">
+		<table class="table">
+		<tr>
+		<th><b>Stock Symbol</b</th>
+		<th><b>Stock Price</b</th>
+    	<th><b>Quantity</b</th>
+		</tr>
+		<tr ng-repeat="x in savedStockList">
+			<td><span ng-bind="x.stocksymbol"></span></td>
+			<td><span ng-bind="x.stockprice"></span></td>
+			<td><span ng-bind="x.stockquantity"></span></td>
+		</tr>
+		</table>
+		<button ng-click="getSavedStocks()">Fetch Saved Stock</button>
+		</div>
+	</div>
+</div>
+
+</form>
+	</script>
+	</div>
+
+	<script src='scripts/jquery.min.js'></script>
+	<script src='scripts/bootstrap.min.js'></script>
+	<script src='scripts/angular.min.js'></script>
+	<script src='scripts/angular-ui-router.js'></script>
+	<script src="trade.js"></script>
+
+</body>
+</html>

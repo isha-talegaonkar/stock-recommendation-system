@@ -1,0 +1,7 @@
+com/citi/trade/stock/SaveStockServletTest.class
+com/citi/trade/dao/AutheticationDAOTest.class
+com/citi/trade/stock/FetchSavedStockServletTest.class
+com/citi/trade/stock/RecommendedStockServletTest.class
+com/citi/trade/stock/StockRecommendationTest.class
+com/citi/trade/authentication/AuthenticationServletTest.class
+com/citi/trade/dao/StockDAOTest.class
